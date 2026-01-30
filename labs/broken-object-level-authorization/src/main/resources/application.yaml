@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: broken-object-level-authorization
+
+  jpa:
+    hibernate:
+      ddl-auto: create
