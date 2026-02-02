@@ -1,6 +1,41 @@
 # [API1:2023](https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/) Broken Object Level Authorization (BOLA)
 
-Object level authorization is an access control mechanism that is usually implemented at the code level to validate that a user can only access the objects that they should have permissions to access. 
+APIs tend to expose endpoints that handle object identifiers, creating a wide attack surface of Object Level Access Control issues. Object level authorization checks should be considered in every function that accesses a data source using an ID from the user.
 
 - Check the ownership of the object
 - Use RBAC to restrict access
+
+# [API2:2023](https://owasp.org/API-Security/editions/2023/en/0xa2-broken-authentication/) Broken Authentication
+
+Authentication mechanisms are often implemented incorrectly, allowing attackers to compromise authentication tokens or to exploit implementation flaws to assume other user's identities temporarily or permanently. Compromising a system's ability to identify the client/user, compromises API security overall.
+
+- [RFC 9700](https://www.rfc-editor.org/rfc/rfc9700.html#name-best-practices) document describes best current security practice for OAuth 2.0
+- [Token profiles](https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles) define the format and claims of access tokens issued for an API. An example ist the [RFC 9068 token profile](https://www.rfc-editor.org/rfc/rfc9068.html).
+
+## RFC 9068
+
+- The RFC 9068 specification aims to provide a standardized and interoperable profile as an alternative. 
+- Defining a common set of mandatory and optional claims and how a resource server should validate incoming JWT access tokens.
+- The validation process is described in [Section 4](https://www.rfc-editor.org/rfc/rfc9068.html#name-validating-jwt-access-token). 
+
+### Header
+
+| Claim | Description                                                                                                                                                                                                     |
+| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `typ` | Indicates that the token is a JWT. Per the definition of "typ" in Section 4.1.9 of [RFC7515], it is RECOMMENDED that the "application/" prefix be omitted.  Therefore, the "typ" value used SHOULD be "at+jwt". |
+| `alg` | The resource server **MUST** validate the signature of all incoming JWT access tokens according to [RFC7515] using the algorithm specified in the JWT "alg" Header Parameter                                    |
+
+
+### Payload Structure
+
+| Claim       | Description                                                                                                                                                                                                                                                          |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `iss`       | Issuer claim identifies the principal that issued the JWT.                                                                                                                                                                                                           |
+| `exp`       | Expiration time claim identifies the expiration time on or after which the JWT **MUST NOT** be accepted for processing. The processing of the "exp" claim requires that the current date/time **MUST** be before the expiration date/time listed in the "exp" claim. |
+| `aud`       | Audience claim identifies the recipients that the JWT is intended for.  Each principal intended to process the JWT **MUST** identify itself with a value in the audience claim.                                                                                      |
+| `sub`       | Subject claim identifies the principal that is the subject of the JWT.                                                                                                                                                                                               |
+| `client_id` | Identifies the application or client that requested the token. It is typically issued by the authorization server to the client during registration.                                                                                                                 |
+| `iat`       | This claim identifies the time at which the JWT access token was issued.                                                                                                                                                                                             |
+| `jti`       | Unique identifier for the access token.                                                                                                                                                                                                                              |
+
+<br>
