@@ -39,3 +39,18 @@ Authentication mechanisms are often implemented incorrectly, allowing attackers 
 | `jti`       | Unique identifier for the access token.                                                                                                                                                                                                                              |
 
 <br>
+
+# [API3:2023 ](https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/) BBroken Object Property Level Authorization
+
+When allowing a user to access an object using an API endpoint, it is important to validate that the user has access to the specific object properties they are trying to access.
+
+An API endpoint is vulnerable if:
+
+- The API endpoint exposes properties of an object that are considered sensitive and should not be read by the user (previously named: "Excessive Data Exposure")
+- The API endpoint allows a user to change, add/or delete the value of a sensitive object's property which the user should not be able to access (previously named: "Mass Assignment")
+
+How To Prevent:
+
+- Validate and sanitize input
+- Keep returned data structures to the bare minimum, according to the business/functional requirements for the endpoint → use DTO to control which properties are exposed.
+- Use RBAC to restrict access to data → for fine-grained access controll use Jackson JSON Views or Spring Data REST Projections 
