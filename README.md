@@ -63,3 +63,26 @@ Exploitation requires the attacker to send legitimate API calls to an API endpoi
   - **deny all access by default**
   - requiring **explicit grants to specific roles** for access to every function.
 - **Review your API endpoints** against function level authorization flaws, while keeping in mind the business logic of the application and groups hierarchy.
+
+# [API6:2023](https://owasp.org/API-Security/editions/2023/en/0xa6-unrestricted-access-to-sensitive-business-flows/) Unrestricted Access to Sensitive Business Flows
+
+An API endpoint is vulnerable if:
+
+- When creating an API Endpoint, it is important to understand which business flow it exposes. Some business flows are more sensitive than others, in the sense that excessive access to them may harm the business.
+- Common examples of sensitive business flows and risk of excessive access associated with them:
+
+  - Purchasing a product flow - an attacker can buy all the stock of a high-demand item at once and resell for a higher price (scalping) 
+  - Creating a comment/post flow - an attacker can spam the system
+  - Making a reservation - an attacker can reserve all the available time slots and prevent other users from using the system
+
+How To Prevent:
+
+- **Business** - identify the business flows that might harm the business if they are excessively used.
+- **Engineering** - choose the right protection mechanisms to mitigate the business risk:
+
+  - **Device fingerprinting**: denying service to unexpected client devices (e.g headless browsers) tends to make threat actors use more sophisticated solutions, thus more costly for them
+  - **Human detection**: using either captcha or more advanced biometric solutions (e.g. typing patterns)
+  - **Non-human patterns**: analyze the user flow to detect non-human patterns (e.g. the user accessed the "add to cart" and "complete purchase" functions in less than one second)
+  - **Consider** blocking IP addresses of Tor exit nodes and well-known proxies
+
+- **Secure and limit access to APIs** that are consumed directly by machines (such as developer and B2B APIs). They tend to be an easy target for attackers because they often don't implement all the required protection mechanisms.

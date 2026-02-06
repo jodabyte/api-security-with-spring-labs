@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: unrestricted-access-to-sensitive-business-flows
+
+
+
+
+  cache:
+    cache-names: "request-rate-limit"
+    caffeine:
+      spec: "expireAfterWrite=1h"
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
