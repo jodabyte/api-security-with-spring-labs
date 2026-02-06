@@ -2,8 +2,8 @@
 
 APIs tend to expose endpoints that handle object identifiers, creating a wide attack surface of Object Level Access Control issues. Object level authorization checks should be considered in every function that accesses a data source using an ID from the user.
 
-- Check the ownership of the object
-- Use RBAC to restrict access
+- Check the **ownership** of the object
+- Use **RBAC** to restrict access
 
 # [API2:2023](https://owasp.org/API-Security/editions/2023/en/0xa2-broken-authentication/) Broken Authentication
 
@@ -40,7 +40,7 @@ Authentication mechanisms are often implemented incorrectly, allowing attackers 
 
 <br>
 
-# [API3:2023 ](https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/) BBroken Object Property Level Authorization
+# [API3:2023](https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/) Broken Object Property Level Authorization
 
 When allowing a user to access an object using an API endpoint, it is important to validate that the user has access to the specific object properties they are trying to access.
 
@@ -51,6 +51,15 @@ An API endpoint is vulnerable if:
 
 How To Prevent:
 
-- Validate and sanitize input
-- Keep returned data structures to the bare minimum, according to the business/functional requirements for the endpoint → use DTO to control which properties are exposed.
-- Use RBAC to restrict access to data → for fine-grained access controll use Jackson JSON Views or Spring Data REST Projections 
+- **Validate** and **sanitize** input
+- Keep returned data structures to the bare minimum, according to the business/functional requirements for the endpoint → use DTO to **control which properties are exposed**.
+- Use RBAC to restrict access to data → for **fine-grained access controll** use Jackson JSON Views or Spring Data REST Projections 
+
+# [API5:2023](https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/) Broken Function Level Authorization
+
+Exploitation requires the attacker to send legitimate API calls to an API endpoint that they should not have access to as anonymous users or regular, non-privileged users. 
+
+- The enforcement mechanism(s) should:
+  - **deny all access by default**
+  - requiring **explicit grants to specific roles** for access to every function.
+- **Review your API endpoints** against function level authorization flaws, while keeping in mind the business logic of the application and groups hierarchy.
